@@ -4,7 +4,6 @@ import os
 from torch import nn
 from torch.utils.data import Dataset
 from torch.utils.data import DataLoader
-import bokeh
 from bokeh.models import ColumnDataSource
 from bokeh.plotting import figure, show, column
 from bokeh.io import curdoc
@@ -74,7 +73,6 @@ def train(net, train_iter, num_train, num_epoch, lr, device):
 
         # validation
         res_vali = torch.zeros(3)
-        # ?
         net.eval()
         for x, y in train_iter:
             x, y = x.to(device), y.to(device)
@@ -94,7 +92,7 @@ def train(net, train_iter, num_train, num_epoch, lr, device):
         source_vali_acc.stream({'x': [epoch], 'y': [vali_acc]})
 
 def test(net, test_iter, device):
-    net.eval()  # 开始评估模式（清除梯度，不调整权重）
+    net.eval()
     res = torch.zeros((10, 10), dtype=torch.int, device=device)
     for x, y in test_iter:
         x, y = x.to(device), y.to(device)
